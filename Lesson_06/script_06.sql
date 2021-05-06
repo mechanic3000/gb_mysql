@@ -16,7 +16,18 @@ SELECT CONCAT("Больше всех лайков поставили ",
 			ORDER BY likes_count DESC 
 		) AS likes
 	LIMIT 1;
-  
+
+
+-- Вывести для каждого пользователя количество созданных сообщений, 
+-- постов, загруженных медиафайлов и поставленных лайков.
+
+
+SELECT CONCAT(u.first_name, " ", u.last_name) as name,
+		IFNULL((SELECT COUNT(*) FROM messages m WHERE m.from_user_id = u.id GROUP BY m.from_user_id), 0) as messages,
+		IFNULL((SELECT COUNT(*) FROM posts p WHERE p.user_id = u.id GROUP BY p.user_id), 0) as posts,
+		IFNULL((SELECT COUNT(*) FROM media m2 WHERE m2.user_id = u.id GROUP BY m2.user_id), 0) as media,
+		IFNULL((SELECT COUNT(*) FROM likes l WHERE l.user_id = u.id GROUP BY l.user_id), 0) as likes
+FROM users u;
   
   
 -- (по желанию) Подсчитать количество лайков которые получили 10 
