@@ -39,10 +39,10 @@ SELECT CONCAT(u.first_name, ' ', u.last_name) as `name` ,
 		COUNT(l.id) as `likes`
 	FROM profiles p 
 	LEFT JOIN likes l 
-		ON p.user_id = l.target_id 
+		ON p.user_id = l.target_id
+		AND l.target_type = 'users'
 	INNER JOIN users u 
 		ON u.id = p.user_id 
-	WHERE l.target_type = 'users'
 	GROUP BY p.user_id
-	ORDER BY p.birthday DESC 
+	ORDER BY p.birthday DESC
 	LIMIT 10;
